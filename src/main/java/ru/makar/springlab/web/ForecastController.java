@@ -37,25 +37,31 @@ public class ForecastController {
             throw new NotFoundException();
         }
         model.addAttribute("forecast", forecast);
-        return "forecast/show";
+        return "/forecast/show";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addForecast(Model model) {
+        model.addAttribute("title", "Добавление нового прогноза");
         model.addAttribute("sendURL", "/forecast/add");
         return "/forecast/form";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addForecast(@ModelAttribute Forecast forecast, Model model) {
-        int id = dao.addForecast(forecast);
+        dao.addForecast(forecast);
         return "redirect:/forecast/list";
     }
 
     @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
     public String editForecast(@PathVariable("id") int id, Model model) {
+        Forecast forecast = dao.getForecastById(id);
+        if (forecast == null) {
+            throw new NotFoundException();
+        }
+        model.addAttribute("title", "Редактирование прогноза");
         model.addAttribute("sendURL", "/forecast/editConfirm");
-        model.addAttribute("forecast", dao.getForecastById(id));
+        model.addAttribute("forecast", forecast);
         return "/forecast/form";
     }
 
@@ -70,7 +76,11 @@ public class ForecastController {
 
     @RequestMapping(value = "/{id}/remove", method = RequestMethod.GET)
     public String removeForecast(@PathVariable("id") int id, Model model) {
-        model.addAttribute("forecast", dao.getForecastById(id));
+        Forecast forecast =dao.getForecastById(id);
+        if (forecast == null) {
+            throw new NotFoundException();
+        }
+        model.addAttribute("forecast", forecast);
         return "/forecast/remove";
     }
 

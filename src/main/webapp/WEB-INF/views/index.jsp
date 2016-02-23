@@ -4,13 +4,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link href="<c:url value="/res/css/style.css"/>" rel="stylesheet"/>
+        <title>Главная страница</title>
     </head>
     <body>
-        <p>
-            <a href='<c:url value="/forecast/list"/>'>
-                Список прогнозов
-            </a>
-        </p>
+        <div class="main">
+            <a class="button" href='<c:url value="/forecast/list"/>'>Список прогнозов</a>
+        </div>
     </body>
 </html>
